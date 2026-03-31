@@ -12,6 +12,8 @@
 radius = 0.2397461
 height = 1.1230469
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xxt7o"]
+
 [node name="KeyboardPlayer" type="CharacterBody3D" unique_id=2066300297]
 script = ExtResource("1_loucl")
 
@@ -19,12 +21,17 @@ script = ExtResource("1_loucl")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.530382, 0)
 shape = SubResource("CapsuleShape3D_o6xl0")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=919055776]
+transform = Transform3D(0.47850582, 0, 0, 0, 0.56030875, 0, 0, 0, 0.47283116, 0, 0.53282833, 0)
+mesh = SubResource("CapsuleMesh_xxt7o")
+
 [node name="Head" type="Node3D" parent="." unique_id=1491765046]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8755669, 0)
 script = ExtResource("2_ujxyr")
 
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=1512060157]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10864204, 0)
+current = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Head/Camera3D" unique_id=1032582002]
 

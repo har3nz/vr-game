@@ -48,8 +48,8 @@ func manage_ids(id_assignment: IDAssignment) -> void:
 		remote_ids = id_assignment.remote_ids
 		for remote_id in remote_ids:
 			if remote_id == id: continue
-			handle_remote_id_assignment.emit(remote_id)
+			handle_remote_id_assignment.emit(remote_id, id_assignment.remote_ids.get(id_assignment.id))
 
 	else: # When id != -1, we already own an id, and just append the remote ids by the sent id
 		remote_ids.set(id_assignment.id, id_assignment.remote_ids.get(id_assignment.id))
-		handle_remote_id_assignment.emit(id_assignment.id, id_assignment.remote_ids.get(id_assignment.id))
+		handle_remote_id_assignment.emit(id_assignment.id, remote_ids.get(id_assignment.id))

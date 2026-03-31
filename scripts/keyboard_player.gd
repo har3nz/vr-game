@@ -3,7 +3,7 @@ extends CharacterBody3D
 var is_authority: bool:
 	get: return !NetworkHandler.is_server && owner_id == ClientNetworkGlobals.id
 
-var owner_id: int
+var owner_id: int = 1
 var health: int
 var online: bool = false
 
@@ -25,12 +25,13 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 
 func _ready() -> void:
+	
 	ClientUI.button_clicked.connect(button_clicked)
 
 func _physics_process(delta):
-	if owner_id == 0 and !is_authority: 
-		return
-
+	setup_camera()
+	if online and !is_authority: return
+	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
@@ -57,16 +58,23 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-	PlayerPosition.create(owner_id, global_position).send(NetworkHandler.server_peer)
+	if online:
+		PlayerPosition.create(owner_id, global_position).send(NetworkHandler.server_peer)
 
+func setup_camera():
+	if NetworkHandler.is_server:
+		var world_cam = get_node_or_null("../../Camera3D")
+		if world_cam:
+			world_cam.current = true
+	elif is_authority:
+		var local_cam = get_node_or_null("Head/Camera3D")
+		if local_cam:
+			local_cam.current = true
 
 func button_clicked() -> void:
 	var pointer = get_node_or_null("LeftHand/FunctionPointer")
 	if pointer:
 		pointer.enabled = false
-	
-	if online == false:
-		self.queue_free()
 
 func server_handle_player_position(peer_id: int, player_position: PlayerPosition) -> void:
 	if owner_id != peer_id: return

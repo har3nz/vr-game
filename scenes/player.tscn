@@ -7,10 +7,17 @@
 [ext_resource type="Script" uid="uid://c0of2ck3jt34u" path="res://scripts/right_hand.gd" id="5_smehm"]
 [ext_resource type="PackedScene" uid="uid://l2n30mpbkdyw" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_hand_low.tscn" id="6_fjrip"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tuyoq"]
+radius = 0.2397461
+height = 1.1230469
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_fjrip"]
+
 [node name="Player" type="XROrigin3D" unique_id=1846831463]
 script = ExtResource("1_tuyoq")
 
 [node name="XRCamera3D" type="XRCamera3D" parent="." unique_id=1784503145]
+current = true
 
 [node name="LeftHand" type="XRController3D" parent="." unique_id=579527603]
 tracker = &"left_hand"
@@ -37,3 +44,10 @@ distance = 2.0
 show_laser = 2
 laser_length = 1
 show_target = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=850176976]
+shape = SubResource("CapsuleShape3D_tuyoq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1889113965]
+transform = Transform3D(0.47850582, 0, 0, 0, 0.56030875, 0, 0, 0, 0.47283116, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_fjrip")
