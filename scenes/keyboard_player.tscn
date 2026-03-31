@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://dpnh68igft5nj"]
+
+[ext_resource type="Script" uid="uid://b1y2cbn3xs1yt" path="res://scripts/keyboard_player.gd" id="1_loucl"]
+[ext_resource type="Script" uid="uid://0w5flsa5bk6b" path="res://scripts/head.gd" id="2_ujxyr"]
+[ext_resource type="Script" uid="uid://ci5hjw7pu68wj" path="res://scripts/left_hand.gd" id="3_xxt7o"]
+[ext_resource type="PackedScene" uid="uid://b4kad2kuba1yn" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_hand_low.tscn" id="4_q7td2"]
+[ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="5_6romo"]
+[ext_resource type="Script" uid="uid://c0of2ck3jt34u" path="res://scripts/right_hand.gd" id="6_qwx76"]
+[ext_resource type="PackedScene" uid="uid://l2n30mpbkdyw" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_hand_low.tscn" id="7_ygs3w"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o6xl0"]
+radius = 0.2397461
+height = 1.1230469
+
+[node name="KeyboardPlayer" type="CharacterBody3D" unique_id=2066300297]
+script = ExtResource("1_loucl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=182839853]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.530382, 0)
+shape = SubResource("CapsuleShape3D_o6xl0")
+
+[node name="Head" type="Node3D" parent="." unique_id=1491765046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8755669, 0)
+script = ExtResource("2_ujxyr")
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=1512060157]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10864204, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Head/Camera3D" unique_id=1032582002]
+
+[node name="ColorRect" type="ColorRect" parent="Head/Camera3D/CanvasLayer" unique_id=1109767761]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LeftHand" type="XRController3D" parent="." unique_id=764578704]
+visible = false
+tracker = &"left_hand"
+script = ExtResource("3_xxt7o")
+
+[node name="LeftHand" parent="LeftHand" unique_id=2105831429 instance=ExtResource("4_q7td2")]
+
+[node name="FunctionPointer" parent="LeftHand" unique_id=934859716 instance=ExtResource("5_6romo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02, 0.05, -0.1)
+distance = 2.0
+show_laser = 2
+laser_length = 1
+show_target = true
+
+[node name="RightHand" type="XRController3D" parent="." unique_id=718790699]
+visible = false
+tracker = &"right_hand"
+script = ExtResource("6_qwx76")
+
+[node name="RightHand" parent="RightHand" unique_id=2140438769 instance=ExtResource("7_ygs3w")]
+
+[node name="FunctionPointer" parent="RightHand" unique_id=1531122470 instance=ExtResource("5_6romo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02, 0.05, -0.1)
+distance = 2.0
+show_laser = 2
+laser_length = 1
+show_target = true

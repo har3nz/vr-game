@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://behnebmc6g6rd"]
+
+[ext_resource type="ArrayMesh" uid="uid://dkk21k7xkve7w" path="res://models/AK-74.obj" id="1_sj0nw"]
+
+[node name="AK-47" type="Node3D" unique_id=663226167]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1512782790]
+mesh = ExtResource("1_sj0nw")

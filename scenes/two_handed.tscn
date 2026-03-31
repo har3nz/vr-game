@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://cxtsj6031p746"]
+
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_jin7d"]
+[ext_resource type="Script" uid="uid://7l4rb348nnxi" path="res://scripts/two_handed.gd" id="2_b5yf2"]
+[ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_mq6kk"]
+[ext_resource type="Animation" uid="uid://db62hs5s4n2b3" path="res://addons/godot-xr-tools/hands/animations/left/Grip 4.res" id="3_b5yf2"]
+[ext_resource type="Animation" uid="uid://dlxa6f6hwurka" path="res://addons/godot-xr-tools/hands/animations/left/Default pose.res" id="4_jhuck"]
+[ext_resource type="Script" uid="uid://dvobm6vcfnqe8" path="res://addons/godot-xr-tools/hands/poses/hand_pose_settings.gd" id="5_idusr"]
+[ext_resource type="PackedScene" uid="uid://behnebmc6g6rd" path="res://scenes/ak_47.tscn" id="6_k67em"]
+[ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="7_drc10"]
+[ext_resource type="Animation" uid="uid://csp3fdknowmi5" path="res://addons/godot-xr-tools/hands/animations/right/Pistol.res" id="8_h3jxv"]
+[ext_resource type="Animation" uid="uid://ky28birj4su6" path="res://addons/godot-xr-tools/hands/animations/right/Default pose.res" id="9_7ck2r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jin7d"]
+size = Vector3(0.05230713, 0.27035522, 0.94140625)
+
+[sub_resource type="Resource" id="Resource_u1pox"]
+script = ExtResource("5_idusr")
+open_pose = ExtResource("4_jhuck")
+closed_pose = ExtResource("3_b5yf2")
+metadata/_custom_type_script = "uid://dvobm6vcfnqe8"
+
+[sub_resource type="Resource" id="Resource_ce1o4"]
+script = ExtResource("5_idusr")
+open_pose = ExtResource("9_7ck2r")
+closed_pose = ExtResource("8_h3jxv")
+metadata/_custom_type_script = "uid://dvobm6vcfnqe8"
+
+[node name="TwoHanded" unique_id=2021017890 instance=ExtResource("1_jin7d")]
+script = ExtResource("2_b5yf2")
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(0.9999999, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0.0020851395, -0.083385795, -0.02099609)
+shape = SubResource("BoxShape3D_jin7d")
+
+[node name="GrabPointHandLeft" parent="." index="1" unique_id=684092243 instance=ExtResource("2_mq6kk")]
+transform = Transform3D(0.03382144, -0.12212524, -0.9919381, 0.9897203, 0.1420893, 0.016252238, 0.13895907, -0.98229116, 0.1256755, 0.049068123, -0.0028961897, -0.20135626)
+visible = true
+mode = 2
+hand_pose = SubResource("Resource_u1pox")
+
+[node name="GrabPointHandRight" parent="." index="2" unique_id=1190049441 instance=ExtResource("7_drc10")]
+transform = Transform3D(1, 0, 0, 0, 0.99475116, -0.102323785, 0, 0.102323785, 0.99475116, -0.010199562, -0.028947443, 0.07275446)
+visible = true
+hand_pose = SubResource("Resource_ce1o4")
+
+[node name="AK-47" parent="." index="3" unique_id=663226167 instance=ExtResource("6_k67em")]
+
+[node name="Right" type="XRController3D" parent="." index="4" unique_id=1856727412]
+tracker = &"right_hand"
+
+[node name="Muzzle" type="Marker3D" parent="." index="5" unique_id=1514136965]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.47718808)
+
+[node name="Timer" type="Timer" parent="." index="6" unique_id=1810956719]
+wait_time = 0.05
+
+[node name="RayCast3D" type="RayCast3D" parent="." index="7" unique_id=1291465223]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.44895267)
+target_position = Vector3(0, -35, 0)
+
+[connection signal="button_pressed" from="Right" to="." method="_on_right_button_pressed"]
+[connection signal="button_released" from="Right" to="." method="_on_right_button_released"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

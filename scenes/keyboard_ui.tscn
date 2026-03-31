@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://dw7oxoqrsxpkw"]
+
+[ext_resource type="Script" uid="uid://vklv0stjb04n" path="res://scripts/keyboard_ui.gd" id="1_nch26"]
+[ext_resource type="PackedScene" uid="uid://dvdu6bsy03jdg" path="res://scenes/low_level_ui.tscn" id="2_7qgwu"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_85g3d"]
+center_offset = Vector3(0, 0, 0.5)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nch26"]
+viewport_path = NodePath("viewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ya4ey"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = SubResource("ViewportTexture_nch26")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_85g3d"]
+size = Vector3(1.9746094, 9.841362, 0.06652832)
+
+[node name="KeyboardUI" type="Node3D" unique_id=1631575391]
+script = ExtResource("1_nch26")
+
+[node name="display" type="MeshInstance3D" parent="." unique_id=1374120760]
+transform = Transform3D(1.298, 0, 0, 0, -1.4424758e-09, -1.298, 0, 0.033, -5.673738e-08, 0, 0.66911, -3.0393825)
+mesh = SubResource("PlaneMesh_85g3d")
+surface_material_override/0 = SubResource("StandardMaterial3D_ya4ey")
+
+[node name="viewport" type="SubViewport" parent="." unique_id=192766537]
+transparent_bg = true
+size_2d_override_stretch = true
+
+[node name="LowLevelUI" parent="viewport" unique_id=1340148196 instance=ExtResource("2_7qgwu")]
+offset_left = -134.5
+offset_top = -145.0
+offset_right = 134.5
+offset_bottom = 145.0
+
+[node name="area" type="Area3D" parent="." unique_id=1893259002]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="area" unique_id=2042754492]
+transform = Transform3D(1.5, 0, 0, 0, 0.293, 0, 0, 0, 1.5, -0.047607422, 0.6842954, -2.9754577)
+shape = SubResource("BoxShape3D_85g3d")

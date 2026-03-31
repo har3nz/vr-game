@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://blvilk00mfha"]
+
+[ext_resource type="Script" uid="uid://poydni060y18" path="res://scripts/player_spawner.gd" id="1_ruvnm"]
+
+[node name="LowLevelPlayerSpawner" type="Node" unique_id=2016178333]
+script = ExtResource("1_ruvnm")

@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://djl4e0ewg1bhh"]
+
+[ext_resource type="Script" uid="uid://3ard5jfdxf22" path="res://scripts/main.gd" id="1_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://cqcmb8prh1kvd" path="res://scenes/player.tscn" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://dvdu6bsy03jdg" path="res://scenes/low_level_ui.tscn" id="4_tefeu"]
+[ext_resource type="PackedScene" uid="uid://dxw7cledbpiia" path="res://addons/proto-csgs/proto_csg_box_3d.tscn" id="5_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://dpnh68igft5nj" path="res://scenes/keyboard_player.tscn" id="6_85g3d"]
+[ext_resource type="Texture2D" uid="uid://cej3yoosomfd2" path="res://addons/proto-csgs/textures/dark/texture_13.png" id="6_tipki"]
+[ext_resource type="PackedScene" uid="uid://blvilk00mfha" path="res://scenes/low_level_player_spawner.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://dw7oxoqrsxpkw" path="res://scenes/keyboard_ui.tscn" id="9_choun"]
+[ext_resource type="Script" uid="uid://dtlx6c8wwen4n" path="res://scripts/weapon_spawner.gd" id="10_ya4ey"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0wfyh"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_sugp2"]
+sky_material = SubResource("ProceduralSkyMaterial_0wfyh")
+
+[sub_resource type="Environment" id="Environment_jyhfs"]
+background_mode = 2
+sky = SubResource("Sky_sugp2")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_choun"]
+resource_local_to_scene = true
+albedo_texture = ExtResource("6_tipki")
+uv1_offset = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[node name="Main" type="Node3D" unique_id=1902549264]
+script = ExtResource("1_0wfyh")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=401061011]
+environment = SubResource("Environment_jyhfs")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=700014]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." unique_id=1846831463 instance=ExtResource("2_sugp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48912996, 0)
+current = true
+
+[node name="ProtoCSGBox3D" parent="." unique_id=1187159588 instance=ExtResource("5_o6xl0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3691814, 0)
+size = Vector3(20, 0.25, 20)
+material = SubResource("StandardMaterial3D_choun")
+
+[node name="KeyboardPlayer" parent="." unique_id=2066300297 instance=ExtResource("6_85g3d")]
+
+[node name="VRUI" parent="." unique_id=1925738269 instance=ExtResource("3_sugp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.060586452, 0.79428744, -4.1481023)
+scene = ExtResource("4_tefeu")
+viewport_size = Vector2(640, 320)
+unshaded = true
+scene_properties_keys = PackedStringArray("client_ui.gd")
+
+[node name="KeyboardUI" parent="." unique_id=1631575391 instance=ExtResource("9_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5262065, 0)
+
+[node name="WeaponSpawner" type="Node" parent="." unique_id=967908869]
+script = ExtResource("10_ya4ey")
+
+[node name="PlayerSpawner" parent="." unique_id=2016178333 instance=ExtResource("7_o6xl0")]
